@@ -527,8 +527,39 @@
         window.addEventListener('load', loadFormData);
 
         // Nettoyer après envoi
-        form.addEventListener('submit', function () {
-            localStorage.removeItem('projectFormData');
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const submitBtn = form.querySelector('.submit-btn');
+            const originalBtnText = submitBtn.textContent;
+
+            // État de chargement
+            submitBtn.textContent = 'Envoi en cours...';
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.7';
+            submitBtn.style.cursor = 'wait';
+
+            const formData = new FormData(form);
+
+            fetch("https://formsubmit.co/ajax/sagotgab@gmail.com", {
+                method: "POST",
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    localStorage.removeItem('projectFormData');
+                    window.location.href = 'merci.html';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("Une erreur s'est produite lors de l'envoi. Merci de réessayer.");
+
+                    // Rétablir le bouton
+                    submitBtn.textContent = originalBtnText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                    submitBtn.style.cursor = 'pointer';
+                });
         });
     </script>
 </body>
