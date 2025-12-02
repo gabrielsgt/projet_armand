@@ -176,78 +176,12 @@
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 20px 10px;
-            }
-
             .container {
-                padding: 40px 24px;
-                border-radius: 16px;
+                padding: 40px 30px;
             }
 
             h1 {
                 font-size: 2em;
-            }
-
-            .subtitle {
-                margin-bottom: 40px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 10px 0;
-                background: white;
-                /* Full width on mobile looks cleaner */
-            }
-
-            .container {
-                padding: 30px 20px;
-                box-shadow: none;
-                border-radius: 0;
-            }
-
-            h1 {
-                font-size: 1.75em;
-                margin-bottom: 8px;
-            }
-
-            .subtitle {
-                font-size: 1em;
-                margin-bottom: 32px;
-            }
-
-            .section {
-                margin-bottom: 40px;
-            }
-
-            .section-title {
-                font-size: 1.25em;
-                margin-bottom: 20px;
-            }
-
-            input[type="text"],
-            input[type="date"],
-            textarea,
-            select {
-                padding: 12px 14px;
-                font-size: 16px;
-                /* Prevents iOS zoom on focus */
-            }
-
-            .radio-item,
-            .checkbox-item {
-                padding: 10px 14px;
-            }
-
-            .radio-item label,
-            .checkbox-item label {
-                font-size: 0.95em;
-            }
-
-            .submit-btn {
-                padding: 14px 24px;
-                margin-top: 32px;
             }
         }
 
@@ -270,8 +204,9 @@
             <input type="hidden" name="_subject" value="Nouveau formulaire de projet">
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="_template" value="table">
-
-            <!-- SECTION 1 -->
+            <input type="hidden" name="_next" value="https://gabrielsgt.github.io/projet_armand/merci.html">
+            <input type="hidden" name="_autoresponse"
+                value="Merci ! J'ai bien reçu tes réponses, je reviens vers toi très vite." <!-- SECTION 1 -->
             <div class="section">
                 <div class="section-title">Le besoin</div>
 
@@ -286,6 +221,10 @@
                     <textarea id="probleme" name="probleme_resolu"></textarea>
                 </div>
 
+                <div class="question">
+                    <label for="date">Date limite si tu en as une</label>
+                    <input type="date" id="date" name="date_limite">
+                </div>
             </div>
 
             <div class="divider"></div>
