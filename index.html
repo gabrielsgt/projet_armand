@@ -326,12 +326,14 @@
 
                 <div class="question">
                     <label for="besoin">Description en quelques phrases du projet</label>
-                    <textarea id="besoin" name="description_besoin" required></textarea>
+                    <textarea id="besoin" name="description_besoin" required
+                        placeholder="Ex: Je souhaite un outil qui analyse automatiquement les CCTP et rapports de sol pour en extraire les risques techniques..."></textarea>
                 </div>
 
                 <div class="question">
                     <label for="probleme">Quel problème cela résout ?</label>
-                    <textarea id="probleme" name="probleme_resolu"></textarea>
+                    <textarea id="probleme" name="probleme_resolu"
+                        placeholder="Ex: Des ingénieurs passent 4h par dossier à lire des PDF de 200 pages, avec un risque de rater une norme importante..."></textarea>
                 </div>
 
 
@@ -368,14 +370,22 @@
 
                         <div class="question">
                             <label for="fonctionnalites">Liste les fonctionnalités principales</label>
-                            <textarea id="fonctionnalites" name="fonctionnalites_principales" required></textarea>
+                            <textarea id="fonctionnalites" name="fonctionnalites_principales" required
+                                placeholder="Ex :&#10;- Upload de fichiers PDF/DWG&#10;- Détection automatique des normes&#10;- Chatbot pour interroger les documents"></textarea>
                             <p class="help-text">Une fonctionnalité par ligne</p>
                         </div>
 
                         <div class="question">
                             <label for="actions">Que doit pouvoir faire l'utilisateur ?</label>
-                            <textarea id="actions" name="actions_utilisateur"></textarea>
+                            <textarea id="actions" name="actions_utilisateur"
+                                placeholder="Ex : L'ingénieur glisse ses fichiers, l'IA analyse, et il reçoit une synthèse des points d'attention par lot."></textarea>
                             <p class="help-text">Exemples : créer, modifier, supprimer, exporter, visualiser</p>
+                        </div>
+
+                        <div class="question">
+                            <label for="inspirations">As-tu des inspirations (outils, sites, apps) ?</label>
+                            <textarea id="inspirations" name="outils_inspirations"
+                                placeholder="Ex : L'interface de ChatGPT pour le chat, ou Autodesk Construction Cloud pour la visu."></textarea>
                         </div>
                     </div>
 
@@ -417,7 +427,8 @@
 
                         <div class="question">
                             <label for="structure">Décris la structure des données</label>
-                            <textarea id="structure" name="structure_donnees"></textarea>
+                            <textarea id="structure" name="structure_donnees"
+                                placeholder="Ex : Plans architecte, CCTP, Rapports de sol, Devis quantitatifs..."></textarea>
                             <p class="help-text">Exemple : Nom, Prénom, Date, Ville, Montant</p>
                         </div>
 
@@ -474,7 +485,14 @@
 
                         <div class="question">
                             <label for="exemple">Décris le résultat idéal que tu attends</label>
-                            <textarea id="exemple" name="resultat_ideal"></textarea>
+                            <textarea id="exemple" name="resultat_ideal"
+                                placeholder="Ex : Un tableau de bord qui liste les incohérences entre le CCTP et les plans, classées par gravité."></textarea>
+                        </div>
+
+                        <div class="question">
+                            <label for="remarques">Remarques libres</label>
+                            <textarea id="remarques" name="remarques_libres"
+                                placeholder="Ex : La sécurité des données est primordiale, les serveurs doivent être en France."></textarea>
                         </div>
                     </div>
 
@@ -487,7 +505,8 @@
 
                         <div class="question">
                             <label for="contraintes">Y a-t-il des contraintes particulières ?</label>
-                            <textarea id="contraintes" name="contraintes_specifiques"></textarea>
+                            <textarea id="contraintes" name="contraintes_specifiques"
+                                placeholder="Ex : Doit gérer des fichiers lourds (>100Mo), fonctionner hors ligne sur chantier, données confidentielles..."></textarea>
                             <p class="help-text">Compatibilité, performances, sécurité, etc.</p>
                         </div>
                     </div>
