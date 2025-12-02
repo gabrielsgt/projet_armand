@@ -511,127 +511,129 @@
                         </div>
                     </div>
 
-                    <div class="divider"></div>
 
 
-                    <script>
-                        // Highlight des items sélectionnés
-                        document.querySelectorAll('.radio-item, .checkbox-item').forEach(item => {
-                            const input = item.querySelector('input');
+                    <button type="submit" class="submit-btn">Envoyer</button>
+        </form>
 
-                            // Vérifier l'état initial
-                            if (input.checked) {
-                                item.classList.add('selected');
-                            }
+        <script>
+            // Highlight des items sélectionnés
+            document.querySelectorAll('.radio-item, .checkbox-item').forEach(item => {
+                const input = item.querySelector('input');
 
-                            input.addEventListener('change', function () {
-                                if (this.type === 'radio') {
-                                    // Pour les radio buttons, retirer la classe de tous les items du même groupe
-                                    document.querySelectorAll(`input[name="${this.name}"]`).forEach(radio => {
-                                        radio.closest('.radio-item').classList.remove('selected');
-                                    });
-                                }
+                // Vérifier l'état initial
+                if (input.checked) {
+                    item.classList.add('selected');
+                }
 
-                                if (this.checked) {
-                                    item.classList.add('selected');
-                                } else {
-                                    item.classList.remove('selected');
-                                }
-                            });
-
-                            // Permettre de cliquer sur toute la zone
-                            item.addEventListener('click', function (e) {
-                                if (e.target !== input) {
-                                    input.click();
-                                }
-                            });
+                input.addEventListener('change', function () {
+                    if (this.type === 'radio') {
+                        // Pour les radio buttons, retirer la classe de tous les items du même groupe
+                        document.querySelectorAll(`input[name="${this.name}"]`).forEach(radio => {
+                            radio.closest('.radio-item').classList.remove('selected');
                         });
+                    }
 
-                        // Sauvegarde automatique
-                        const form = document.getElementById('projectForm');
-                        const inputs = form.querySelectorAll('input, textarea');
+                    if (this.checked) {
+                        item.classList.add('selected');
+                    } else {
+                        item.classList.remove('selected');
+                    }
+                });
 
-                        function saveFormData() {
-                            const formData = new FormData(form);
-                            const data = {};
-                            for (let [key, value] of formData.entries()) {
-                                if (data[key]) {
-                                    if (Array.isArray(data[key])) {
-                                        data[key].push(value);
-                                    } else {
-                                        data[key] = [data[key], value];
-                                    }
+                // Permettre de cliquer sur toute la zone
+                item.addEventListener('click', function (e) {
+                    if (e.target !== input) {
+                        input.click();
+                    }
+                });
+            });
+
+            // Sauvegarde automatique
+            const form = document.getElementById('projectForm');
+            const inputs = form.querySelectorAll('input, textarea');
+
+            function saveFormData() {
+                const formData = new FormData(form);
+                const data = {};
+                for (let [key, value] of formData.entries()) {
+                    if (data[key]) {
+                        if (Array.isArray(data[key])) {
+                            data[key].push(value);
+                        } else {
+                            data[key] = [data[key], value];
+                        }
+                    } else {
+                        data[key] = value;
+                    }
+                }
+                localStorage.setItem('projectFormData', JSON.stringify(data));
+            }
+
+            function loadFormData() {
+                const savedData = localStorage.getItem('projectFormData');
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    for (let [key, value] of Object.entries(data)) {
+                        const elements = form.querySelectorAll(`[name="${key}"]`);
+                        elements.forEach(element => {
+                            if (element.type === 'checkbox' || element.type === 'radio') {
+                                if (Array.isArray(value)) {
+                                    element.checked = value.includes(element.value);
                                 } else {
-                                    data[key] = value;
+                                    element.checked = element.value === value;
                                 }
-                            }
-                            localStorage.setItem('projectFormData', JSON.stringify(data));
-                        }
-
-                        function loadFormData() {
-                            const savedData = localStorage.getItem('projectFormData');
-                            if (savedData) {
-                                const data = JSON.parse(savedData);
-                                for (let [key, value] of Object.entries(data)) {
-                                    const elements = form.querySelectorAll(`[name="${key}"]`);
-                                    elements.forEach(element => {
-                                        if (element.type === 'checkbox' || element.type === 'radio') {
-                                            if (Array.isArray(value)) {
-                                                element.checked = value.includes(element.value);
-                                            } else {
-                                                element.checked = element.value === value;
-                                            }
-                                            if (element.checked) {
-                                                element.closest('.radio-item, .checkbox-item').classList.add('selected');
-                                            }
-                                        } else {
-                                            element.value = value;
-                                        }
-                                    });
+                                if (element.checked) {
+                                    element.closest('.radio-item, .checkbox-item').classList.add('selected');
                                 }
+                            } else {
+                                element.value = value;
                             }
-                        }
-
-                        // Sauvegarder automatiquement
-                        setInterval(saveFormData, 3000);
-                        window.addEventListener('load', loadFormData);
-
-                        // Nettoyer après envoi
-                        form.addEventListener('submit', function (e) {
-                            e.preventDefault();
-
-                            const submitBtn = form.querySelector('.submit-btn');
-                            const originalBtnText = submitBtn.textContent;
-
-                            // État de chargement
-                            submitBtn.textContent = 'Envoi en cours...';
-                            submitBtn.disabled = true;
-                            submitBtn.style.opacity = '0.7';
-                            submitBtn.style.cursor = 'wait';
-
-                            const formData = new FormData(form);
-
-                            fetch("https://formsubmit.co/ajax/sagotgab@gmail.com", {
-                                method: "POST",
-                                body: formData
-                            })
-                                .then(response => response.json())
-                                .then(data => {
-                                    localStorage.removeItem('projectFormData');
-                                    window.location.href = 'merci.html';
-                                })
-                                .catch(error => {
-                                    console.error('Error:', error);
-                                    alert("Une erreur s'est produite lors de l'envoi. Merci de réessayer.");
-
-                                    // Rétablir le bouton
-                                    submitBtn.textContent = originalBtnText;
-                                    submitBtn.disabled = false;
-                                    submitBtn.style.opacity = '1';
-                                    submitBtn.style.cursor = 'pointer';
-                                });
                         });
-                    </script>
+                    }
+                }
+            }
+
+            // Sauvegarder automatiquement
+            setInterval(saveFormData, 3000);
+            window.addEventListener('load', loadFormData);
+
+            // Nettoyer après envoi
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const submitBtn = form.querySelector('.submit-btn');
+                const originalBtnText = submitBtn.textContent;
+
+                // État de chargement
+                submitBtn.textContent = 'Envoi en cours...';
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.7';
+                submitBtn.style.cursor = 'wait';
+
+                const formData = new FormData(form);
+
+                fetch("https://formsubmit.co/ajax/sagotgab@gmail.com", {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        localStorage.removeItem('projectFormData');
+                        window.location.href = 'merci.html';
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert("Une erreur s'est produite lors de l'envoi. Merci de réessayer.");
+
+                        // Rétablir le bouton
+                        submitBtn.textContent = originalBtnText;
+                        submitBtn.disabled = false;
+                        submitBtn.style.opacity = '1';
+                        submitBtn.style.cursor = 'pointer';
+                    });
+            });
+        </script>
 </body>
 
 </html>
